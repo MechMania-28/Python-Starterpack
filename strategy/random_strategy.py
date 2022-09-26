@@ -3,6 +3,7 @@ import player.character_class
 import player.item
 
 import player.position
+from strategy.strategy import Strategy
 
 import util.utility
 
@@ -10,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom
 
 import strategy
 
-class RandomStrategy(strategy):
+class RandomStrategy(Strategy):
     """ generated source for class RandomStrategy """
     def strategyInitialize(self):
         """ generated source for method strategyInitialize """
