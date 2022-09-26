@@ -7,7 +7,7 @@ from player.item import Item
 from player.position import Position
 from strategy.strategy import Strategy
 
-class RandomStrategy(Strategy):
+class StarterStrategy(Strategy):
     def strategy_initialize(self):
         return player.character_class.CharacterClass.WIZARD
 

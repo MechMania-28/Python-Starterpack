@@ -22,7 +22,8 @@ from game_state import GameState
 from networking.client import Client
 from networking.comm_state import CommState
 
-from strategy.random_strategy import RandomStrategy
+from strategy.starter_strategy import  StarterStrategy
+from strategy.strategies_for_each_bot import strategy_as_bot0, strategy_as_bot1, strategy_as_bot2, strategy_as_bot3
 
 class Phase(Enum):
     USE = auto()
@@ -32,7 +33,7 @@ class Phase(Enum):
 
 if __name__ == "__main__":
 
-  strategy = RandomStrategy()
+  strategy = StarterStrategy()
 
   client = Client(29170)
 
@@ -68,6 +69,16 @@ if __name__ == "__main__":
       player_index = int(read)
       logging.debug(("Received player index", player_index))
       comm_state = CommState.CLASS_REPORT
+
+      if player_index == 0 and strategy_as_bot0 != None:
+          strategy = strategy_as_bot0
+      if player_index == 1 and strategy_as_bot1 != None:
+          strategy = strategy_as_bot1
+      if player_index == 2 and strategy_as_bot2 != None:
+          strategy = strategy_as_bot2
+      if player_index == 3 and strategy_as_bot3 != None:
+          strategy = strategy_as_bot3
+
       continue
 
     if comm_state == CommState.CLASS_REPORT:
