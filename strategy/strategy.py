@@ -1,28 +1,26 @@
 from abc import abstractmethod
-import starterpack.player.CharacterClass
+from game_state import GameState
+from player.item import Item
 
-import starterpack.player.Item
+from player.position import Position
 
-import starterpack.player.Position
 
 class Strategy(object):
-    """ generated source for interface Strategy """
     @abstractmethod
-    def strategyInitialize(self):
-        """ generated source for method strategyInitialize """
+    def strategy_initialize(self) -> None:
+        pass
+    @abstractmethod
+    def move_action_decision(self, game_state: GameState, my_player_index) -> Position:
+        pass
 
     @abstractmethod
-    def moveActionDecision(self, gameState, myPlayerIndex):
-        """ generated source for method moveActionDecision """
+    def attack_action_decision(self, game_state: GameState, my_player_index) -> int:
+        pass
 
     @abstractmethod
-    def attackActionDecision(self, gameState, myPlayerIndex):
-        """ generated source for method attackActionDecision """
+    def buy_action_decision(self, game_state: GameState, my_player_index) -> Item:
+        pass
 
     @abstractmethod
-    def buyActionDecision(self, gameState, myPlayerIndex):
-        """ generated source for method buyActionDecision """
-
-    @abstractmethod
-    def useActionDecision(self, gameState, myPlayerIndex):
-        """ generated source for method useActionDecision """
+    def use_action_decision(self, game_state: GameState, my_player_index) -> bool:
+        pass

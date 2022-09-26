@@ -1,47 +1,25 @@
+from random import Random
+from game_state import GameState
 import player.character_class
 
-import player.item
+from player.item import Item
 
-import player.position
+from player.position import Position
 from strategy.strategy import Strategy
 
-import util.utility
-
-import java.util.concurrent.ThreadLocalRandom
-
-import strategy
-
 class RandomStrategy(Strategy):
-    """ generated source for class RandomStrategy """
-    def strategyInitialize(self):
-        """ generated source for method strategyInitialize """
-        return CharacterClass.WIZARD
+    def strategy_initialize(self):
+        return player.character_class.CharacterClass.WIZARD
 
-    def moveActionDecision(self, gameState, myPlayerIndex):
-        """ generated source for method moveActionDecision """
-        while True:
-            if Utility.manhattanDistance(Position(randomX, randomY), gameState.getPlayerStateByIndex(myPlayerIndex).getPosition()) <= gameState.getPlayerStateByIndex(myPlayerIndex).getCharacterClass().getStatSet().getSpeed():
-                return Position(randomX, randomY)
+    def move_action_decision(self, game_state: GameState, my_player_index: int) -> Position:
+        return Position()
 
-    def attackActionDecision(self, gameState, myPlayerIndex):
-        """ generated source for method attackActionDecision """
-        res = 0
-        i = 0
-        while i < 4:
-            print "distance of " + i + ": ",
-            print Utility.squareDistance(gameState.getPlayerStateByIndex(myPlayerIndex).getPosition(), gameState.getPlayerStateByIndex(i).getPosition())
-            print "my range: " + gameState.getPlayerStateByIndex(myPlayerIndex).getCharacterClass().getStatSet().getRange()
-            if i != myPlayerIndex:
-                if Utility.squareDistance(gameState.getPlayerStateByIndex(myPlayerIndex).getPosition(), gameState.getPlayerStateByIndex(i).getPosition()) <= gameState.getPlayerStateByIndex(myPlayerIndex).getCharacterClass().getStatSet().getRange():
-                    return i
-                res = i
-            i += 1
-        return res
+    def attack_action_decision(self, game_state: GameState, my_player_index: int) -> int:
+        # return Random().randint(0, 4)
+        return 4
 
-    def buyActionDecision(self, gameState, myPlayerIndex):
-        """ generated source for method buyActionDecision """
+    def buy_action_decision(self, game_state: GameState, my_player_index: int) -> Item:
         return Item.NONE
 
-    def useActionDecision(self, gameState, myPlayerIndex):
-        """ generated source for method useActionDecision """
+    def use_action_decision(self, game_state: GameState, my_player_index: int) -> bool:
         return False

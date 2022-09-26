@@ -1,28 +1,22 @@
 class StatSet(object):
     """ generated source for class StatSet """
-    maxHealth = int()
+    max_health = int()
     damage = int()
     speed = int()
     range = int()
 
-    def __init__(self, maxHealth, damage, speed, range):
+    def __init__(self, max_health, damage, speed, range):
         """ generated source for method __init__ """
-        self.maxHealth = maxHealth
+        self.max_health = max_health
         self.damage = damage
         self.speed = speed
         self.range = range
 
-    # 
-    #    * Adds two StatSets.
-    #    *
-    #    * @param other The StatSet to be summed with this StatSet.
-    #    * @return Sum StatSet.
-    #    
     def plus(self, other):
         """ generated source for method plus """
         return StatSet(self.maxHealth + other.maxHealth, self.damage + other.damage, self.speed + other.speed, self.range + other.range)
 
-    def getMaxHealth(self):
+    def get_max_health(self):
         """ generated source for method getMaxHealth """
         return self.maxHealth
 
