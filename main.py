@@ -9,6 +9,7 @@ import sys
 from time import sleep
 from types import SimpleNamespace
 from unicodedata import name
+from winsound import PlaySound
 
 import jsonpickle
 from pip import main
@@ -19,9 +20,14 @@ from action.use_action import UseAction
 from game.game_state import GameState
 from networking.client import Client
 from networking.comm_state import CommState
+from player.character_class import CharacterClass
+from player.item import Item
+from player.player_state import PlayerState
+from player.position import Position
+from player.stat_set import StatSet
 
 from strategy.starter_strategy import  StarterStrategy
-from strategy.strategies_for_each_bot import strategy_for_bot0, strategy_for_bot1, strategy_for_bot2, strategy_for_bot3
+from strategy.strategies_for_each_bot import strategy_as_bot0, strategy_for_bot1, strategy_as_bot2, strategy_as_bot3
 
 class Phase(Enum):
     USE = auto()
@@ -68,14 +74,14 @@ def main():
       logging.debug(("Received player index", player_index))
       comm_state = CommState.CLASS_REPORT
 
-      if player_index == 0 and strategy_for_bot0 != None:
-          strategy = strategy_for_bot0
+      if player_index == 0 and strategy_as_bot0 != None:
+          strategy = strategy_as_bot0
       if player_index == 1 and strategy_for_bot1 != None:
           strategy = strategy_for_bot1
-      if player_index == 2 and strategy_for_bot2 != None:
-          strategy = strategy_for_bot2
-      if player_index == 3 and strategy_for_bot3 != None:
-          strategy = strategy_for_bot3
+      if player_index == 2 and strategy_as_bot2 != None:
+          strategy = strategy_as_bot2
+      if player_index == 3 and strategy_as_bot3 != None:
+          strategy = strategy_as_bot3
 
       continue
 
@@ -91,9 +97,10 @@ def main():
     data = client.read()
     
     if (data.startswith("fin")) :
+      logging.info("Exiting.")
       break
 
-    game_state = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+    game_state = parse_json_as_game_state(data)
 
     if phase == Phase.USE :
       use_action = UseAction(player_index, strategy.use_action_decision(game_state, player_index))
@@ -117,6 +124,39 @@ def main():
       phase = Phase.USE
     
   client.disconnect()
+
+""" parse json string into a GameState Object."""
+def parse_json_as_game_state(data: str) -> GameState:
+  gamestate_dict = json.loads(data)
+
+  player_state_list = []
+  for player_state_dict in gamestate_dict['player_states']:
+    player_state = PlayerState()
+    
+    player_state.character_class = CharacterClass[player_state_dict['class']]
+
+    position_dict = player_state_dict['position']
+    player_state.position = Position(x=position_dict['x'], y=position_dict['y'])
+
+    player_state.gold = player_state_dict['gold']
+    player_state.score = player_state_dict['score']
+    player_state.health = player_state_dict['health']
+
+    player_state.item = Item[player_state_dict['item']]
+
+    stat_set_dict = player_state_dict['stat_set']
+    stat_set = StatSet(
+      max_health=stat_set_dict['maxHealth'],
+      speed=stat_set_dict['speed'],
+      damage=stat_set_dict['damage'],
+      range=stat_set_dict['range']
+    )
+    player_state.stat_set = stat_set
+
+    player_state_list.append(player_state)
+
+  game_state = GameState(turn=gamestate_dict['turn'], player_state_list=player_state_list)
+  return game_state
 
 if __name__ == '__main__':
   main()
