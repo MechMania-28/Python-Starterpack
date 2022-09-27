@@ -16,12 +16,12 @@ from action.attack_action import AttackAction
 from action.buy_action import BuyAction
 from action.move_action import MoveAction
 from action.use_action import UseAction
-from game_state.game_state import GameState
+from game.game_state import GameState
 from networking.client import Client
 from networking.comm_state import CommState
 
 from strategy.starter_strategy import  StarterStrategy
-from strategy.strategies_for_each_bot import strategy_as_bot0, strategy_as_bot1, strategy_as_bot2, strategy_as_bot3
+from strategy.strategies_for_each_bot import strategy_for_bot0, strategy_for_bot1, strategy_for_bot2, strategy_for_bot3
 
 class Phase(Enum):
     USE = auto()
@@ -68,14 +68,14 @@ def main():
       logging.debug(("Received player index", player_index))
       comm_state = CommState.CLASS_REPORT
 
-      if player_index == 0 and strategy_as_bot0 != None:
-          strategy = strategy_as_bot0
-      if player_index == 1 and strategy_as_bot1 != None:
-          strategy = strategy_as_bot1
-      if player_index == 2 and strategy_as_bot2 != None:
-          strategy = strategy_as_bot2
-      if player_index == 3 and strategy_as_bot3 != None:
-          strategy = strategy_as_bot3
+      if player_index == 0 and strategy_for_bot0 != None:
+          strategy = strategy_for_bot0
+      if player_index == 1 and strategy_for_bot1 != None:
+          strategy = strategy_for_bot1
+      if player_index == 2 and strategy_for_bot2 != None:
+          strategy = strategy_for_bot2
+      if player_index == 3 and strategy_for_bot3 != None:
+          strategy = strategy_for_bot3
 
       continue
 

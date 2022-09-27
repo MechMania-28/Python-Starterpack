@@ -1,5 +1,5 @@
 from random import Random
-from game_state.game_state import GameState
+from game.game_state import GameState
 import player.character_class
 
 from player.item import Item
@@ -15,8 +15,7 @@ class StarterStrategy(Strategy):
         return Position()
 
     def attack_action_decision(self, game_state: GameState, my_player_index: int) -> int:
-        # return Random().randint(0, 4)
-        return 4
+        return Random().randint(0, 3)
 
     def buy_action_decision(self, game_state: GameState, my_player_index: int) -> Item:
         return Item.NONE
