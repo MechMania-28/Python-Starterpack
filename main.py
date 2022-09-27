@@ -8,17 +8,15 @@ from msilib.schema import Error
 import sys
 from time import sleep
 from types import SimpleNamespace
+from unicodedata import name
 
 import jsonpickle
-from action import buy_action
-from action import attack_action
-from action import move_action
-from action import use_action
+from pip import main
 from action.attack_action import AttackAction
 from action.buy_action import BuyAction
 from action.move_action import MoveAction
 from action.use_action import UseAction
-from game_state import GameState
+from game_state.game_state import GameState
 from networking.client import Client
 from networking.comm_state import CommState
 
@@ -31,7 +29,7 @@ class Phase(Enum):
     ATTACK = auto()
     BUY = auto()
 
-if __name__ == "__main__":
+def main():
 
   strategy = StarterStrategy()
 
@@ -119,3 +117,6 @@ if __name__ == "__main__":
       phase = Phase.USE
     
   client.disconnect()
+
+if __name__ == '__main__':
+  main()

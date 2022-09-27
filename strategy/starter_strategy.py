@@ -1,5 +1,5 @@
 from random import Random
-from game_state import GameState
+from game_state.game_state import GameState
 import player.character_class
 
 from player.item import Item

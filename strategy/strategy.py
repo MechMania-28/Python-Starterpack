@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from game_state import GameState
+from game_state.game_state import GameState
 from player.item import Item
 
 from player.position import Position
