@@ -22,8 +22,7 @@ from player.player_state import PlayerState
 from player.position import Position
 from player.stat_set import StatSet
 
-from strategy.starter_strategy import  StarterStrategy
-from strategy.strategies_for_each_bot import strategy_as_bot0, strategy_as_bot1, strategy_as_bot2, strategy_as_bot3
+from strategy.strategy_config import get_strategy
 
 class Phase(Enum):
     USE = auto()
@@ -33,7 +32,6 @@ class Phase(Enum):
 
 def main():
 
-  strategy = StarterStrategy()
 
   if len(sys.argv) >= 3 and sys.argv[2] == 'debug':
     logging.basicConfig(    
@@ -54,6 +52,9 @@ def main():
   else:
     logging.warn("Invalid player index.")
     return
+
+  strategy = get_strategy(player_index=player_index)
+
 
   client = Client(Config.ports[player_index])
 
@@ -84,16 +85,6 @@ def main():
       player_index = int(read)
       logging.debug(("Received player index", player_index))
       comm_state = CommState.CLASS_REPORT
-
-      if player_index == 0 and strategy_as_bot0 != None:
-          strategy = strategy_as_bot0
-      if player_index == 1 and strategy_as_bot1 != None:
-          strategy = strategy_as_bot1
-      if player_index == 2 and strategy_as_bot2 != None:
-          strategy = strategy_as_bot2
-      if player_index == 3 and strategy_as_bot3 != None:
-          strategy = strategy_as_bot3
-
       continue
 
     if comm_state == CommState.CLASS_REPORT:
