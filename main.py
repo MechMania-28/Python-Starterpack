@@ -32,10 +32,11 @@ class Phase(Enum):
 
 
 def main():
+  logging.info("Starting Mechmania 28 Python bot...")
+
   parser = OptionParser()
   parser.add_option("--debug", "-d", dest="debug", action="store_true", help="Turn on debug mode", default=False)
-  (options, args) = parser.parse_args()
-
+  (options, _) = parser.parse_args()
 
   if options.debug == True:
     logging.basicConfig(    
@@ -64,14 +65,8 @@ def main():
 
   client.connect()
 
-
-
-  logging.debug("start")
-
-
-
+  logging.info("Connected to Engine.")
   comm_state = CommState.START
-
 
   while comm_state != CommState.END:
     logging.debug((comm_state, comm_state==CommState.START))
@@ -96,6 +91,7 @@ def main():
       client.write(jsonpickle.encode(character_class.name))
       comm_state = CommState.END
 
+  logging.info("Finished setup. Running game...")
 
   phase = Phase.USE 
   while(True):
@@ -103,12 +99,13 @@ def main():
     data = client.read()
     
     if (data.startswith("fin")) :
-      logging.info("Exiting.")
+      logging.info("Game ended. Check your output at Engine\\gamelogs.")
       break
 
     game_state = parse_json_as_game_state(data)
 
     if phase == Phase.USE :
+      logging.info("Turn: " + game_state.turn)
       use_action = UseAction(player_index, strategy.use_action_decision(game_state, player_index))
       logging.debug(jsonpickle.encode(use_action))
       client.write(jsonpickle.encode(use_action, unpicklable=False))
@@ -128,7 +125,7 @@ def main():
       buy_action = BuyAction(player_index, strategy.buy_action_decision(game_state, player_index))
       client.write(jsonpickle.encode(buy_action, unpicklable=False))
       phase = Phase.USE
-    
+      
   client.disconnect()
 
 """ parse json string into a GameState Object."""
