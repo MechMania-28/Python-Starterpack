@@ -32,7 +32,7 @@ class Phase(Enum):
 
 
 def main():
-  logging.info("Starting Mechmania 28 Python bot...")
+  logging.info("Welcome to Mechmania 28 Python bot!")
 
   parser = OptionParser()
   parser.add_option("--debug", "-d", dest="debug", action="store_true", help="Turn on debug mode", default=False)
@@ -52,10 +52,10 @@ def main():
     )
 
   player_index = -1
-  if len(sys.argv) >= 2 and sys.argv[1].isdigit():
+  if len(sys.argv) >= 2 and sys.argv[1].isdigit() and int(sys.argv[1]) >= 0 and int(sys.argv[1]) < 4:
     player_index = int(sys.argv[1])
   else:
-    logging.warn("Invalid player index.")
+    logging.warn("Invalid or empty player number. Please specify a valid player number.")
     return
 
   strategy = get_strategy(player_index=player_index)
@@ -65,14 +65,14 @@ def main():
 
   client.connect()
 
-  logging.info("Connected to Engine.")
+  logging.info("Connected to Engine. Setting up for game...")
   comm_state = CommState.START
 
   while comm_state != CommState.END:
     logging.debug((comm_state, comm_state==CommState.START))
 
     if comm_state == CommState.START:
-      logging.debug("Waiting for wake...")
+      logging.info("Waiting for wake...")
       data = client.read()
       if (data.startswith("wake")):
         comm_state = CommState.NUM_ASSIGN
@@ -82,7 +82,7 @@ def main():
     if comm_state == CommState.NUM_ASSIGN:
       read = client.read()
       player_index = int(read)
-      logging.debug(("Received player index", player_index))
+      logging.info(("Received player index", player_index))
       comm_state = CommState.CLASS_REPORT
       continue
 
@@ -99,7 +99,6 @@ def main():
     data = client.read()
     
     if (data.startswith("fin")) :
-      logging.info("Game ended. Check your output at Engine\\gamelogs.")
       break
 
     game_state = parse_json_as_game_state(data)
@@ -127,6 +126,7 @@ def main():
       phase = Phase.USE
       
   client.disconnect()
+  logging.info("Game ended. Check your output at Engine\\gamelogs.")
 
 """ parse json string into a GameState Object."""
 def parse_json_as_game_state(data: str) -> GameState:

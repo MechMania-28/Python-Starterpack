@@ -16,7 +16,7 @@ class Client:
         self.socket.connect(address)
         self.connected = True
       except ConnectionRefusedError:
-        logging.debug("Connect to engine failed...")
+        logging.info("Connect to engine failed...")
 
   def read(self) -> str:
     message = self.socket.recv(1024)
