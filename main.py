@@ -1,15 +1,10 @@
 from cmath import e
 from distutils.log import debug
 from enum import Enum, auto
-from http import client
 import json
 import logging
-from msilib.schema import Error
 import sys
-from time import sleep
-from types import SimpleNamespace
-from unicodedata import name
-from winsound import PlaySound
+
 
 import jsonpickle
 from pip import main
@@ -17,6 +12,7 @@ from action.attack_action import AttackAction
 from action.buy_action import BuyAction
 from action.move_action import MoveAction
 from action.use_action import UseAction
+from config import Config
 from game.game_state import GameState
 from networking.client import Client
 from networking.comm_state import CommState
@@ -27,7 +23,7 @@ from player.position import Position
 from player.stat_set import StatSet
 
 from strategy.starter_strategy import  StarterStrategy
-from strategy.strategies_for_each_bot import strategy_as_bot0, strategy_for_bot1, strategy_as_bot2, strategy_as_bot3
+from strategy.strategies_for_each_bot import strategy_as_bot0, strategy_as_bot1, strategy_as_bot2, strategy_as_bot3
 
 class Phase(Enum):
     USE = auto()
@@ -39,20 +35,35 @@ def main():
 
   strategy = StarterStrategy()
 
-  client = Client(29170)
+  if len(sys.argv) >= 3 and sys.argv[2] == 'debug':
+    logging.basicConfig(    
+      format='%(asctime)s %(levelname)-8s %(module)-8s %(message)s',
+      level=logging.DEBUG,
+      datefmt='%Y-%m-%d %H:%M:%S'
+    )
+  else:
+    logging.basicConfig(    
+      format='%(asctime)s %(levelname)-8s %(module)-8s %(message)s',
+      level=logging.INFO,
+      datefmt='%Y-%m-%d %H:%M:%S'
+    )
+
+  player_index = -1
+  if len(sys.argv) >= 2 and sys.argv[1].isdigit():
+    player_index = int(sys.argv[1])
+  else:
+    logging.warn("Invalid player index.")
+    return
+
+  client = Client(Config.ports[player_index])
 
   client.connect()
 
-  logging.basicConfig(    
-    format='%(asctime)s %(levelname)-8s %(module)-8s %(message)s',
-    level=logging.DEBUG,
-    datefmt='%Y-%m-%d %H:%M:%S'
-  )
+
 
   logging.debug("start")
 
 
-  player_index = -1
 
   comm_state = CommState.START
 
@@ -76,8 +87,8 @@ def main():
 
       if player_index == 0 and strategy_as_bot0 != None:
           strategy = strategy_as_bot0
-      if player_index == 1 and strategy_for_bot1 != None:
-          strategy = strategy_for_bot1
+      if player_index == 1 and strategy_as_bot1 != None:
+          strategy = strategy_as_bot1
       if player_index == 2 and strategy_as_bot2 != None:
           strategy = strategy_as_bot2
       if player_index == 3 and strategy_as_bot3 != None:

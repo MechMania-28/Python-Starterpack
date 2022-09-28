@@ -9,10 +9,14 @@ class Client:
     self.connected = False
 
   def connect(self):
-    address = ('localhost', self.port_number)     # family is deduced to be 'AF_INET'      
-    self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    self.socket.connect(address)
-    self.connected = True
+    while (not self.connected):
+      address = ('localhost', self.port_number)     # family is deduced to be 'AF_INET'      
+      self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+      try:
+        self.socket.connect(address)
+        self.connected = True
+      except ConnectionRefusedError:
+        logging.debug("Connect to engine failed...")
 
 
 
