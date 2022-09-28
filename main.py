@@ -1,8 +1,7 @@
-from cmath import e
-from distutils.log import debug
 from enum import Enum, auto
 import json
 import logging
+from optparse import OptionParser
 import sys
 
 
@@ -30,10 +29,15 @@ class Phase(Enum):
     ATTACK = auto()
     BUY = auto()
 
+
+
 def main():
+  parser = OptionParser()
+  parser.add_option("--debug", "-d", dest="debug", action="store_true", help="Turn on debug mode", default=False)
+  (options, args) = parser.parse_args()
 
 
-  if len(sys.argv) >= 3 and sys.argv[2] == 'debug':
+  if options.debug == True:
     logging.basicConfig(    
       format='%(asctime)s %(levelname)-8s %(module)-8s %(message)s',
       level=logging.DEBUG,
