@@ -1,6 +1,6 @@
 from enum import Enum
 
-from player.stat_set import StatSet
+from game.stat_set import StatSet
 
 
 class CharacterClass(Enum):

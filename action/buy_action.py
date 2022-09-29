@@ -1,5 +1,5 @@
 from action.action import Action
-from player.item import Item
+from game.item import Item
 
 
 class BuyAction(Action):

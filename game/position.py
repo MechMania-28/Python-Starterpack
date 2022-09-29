@@ -1,4 +1,3 @@
-from mimetypes import init
 
 
 class Position:

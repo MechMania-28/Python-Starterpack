@@ -1,5 +1,5 @@
 from action.action import Action
-from player.position import Position
+from game.position import Position
 
 
 class MoveAction(Action):

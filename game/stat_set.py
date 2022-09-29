@@ -1,4 +1,3 @@
-from tokenize import Number
 
 
 class StatSet(object):

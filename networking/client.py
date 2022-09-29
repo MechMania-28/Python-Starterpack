@@ -19,7 +19,7 @@ class Client:
         logging.info("Connect to engine failed...")
 
   def read(self) -> str:
-    message = self.socket.recv(1024)
+    message = self.socket.recv(2048)
     logging.debug("Received message " + message.decode())
     return message.decode()
 

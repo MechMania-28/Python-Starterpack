@@ -11,16 +11,15 @@ from action.attack_action import AttackAction
 from action.buy_action import BuyAction
 from action.move_action import MoveAction
 from action.use_action import UseAction
-from config import Config
 from game.game_state import GameState
 from networking.client import Client
 from networking.comm_state import CommState
-from player.character_class import CharacterClass
-from player.item import Item
-from player.player_state import PlayerState
-from player.position import Position
-from player.stat_set import StatSet
-
+from game.character_class import CharacterClass
+from game.item import Item
+from game.player_state import PlayerState
+from game.position import Position
+from game.stat_set import StatSet
+import config
 from strategy.strategy_config import get_strategy
 
 class Phase(Enum):
@@ -32,7 +31,6 @@ class Phase(Enum):
 
 
 def main():
-  logging.info("Welcome to Mechmania 28 Python bot!")
 
   parser = OptionParser()
   parser.add_option("--debug", "-d", dest="debug", action="store_true", help="Turn on debug mode", default=False)
@@ -51,6 +49,8 @@ def main():
       datefmt='%Y-%m-%d %H:%M:%S'
     )
 
+  logging.info("Welcome to Mechmania 28 Python bot!")
+
   player_index = -1
   if len(sys.argv) >= 2 and sys.argv[1].isdigit() and int(sys.argv[1]) >= 0 and int(sys.argv[1]) < 4:
     player_index = int(sys.argv[1])
@@ -61,7 +61,7 @@ def main():
   strategy = get_strategy(player_index=player_index)
 
 
-  client = Client(Config.ports[player_index])
+  client = Client(config.PORTS[player_index])
 
   client.connect()
 
@@ -100,11 +100,19 @@ def main():
     
     if (data.startswith("fin")) :
       break
-
-    game_state = parse_json_as_game_state(data)
+    
+    game_state = None
+    
+    try:
+      game_state = parse_json_as_game_state(data)
+    except json.JSONDecodeError as e:
+      logging.warn(e)
+    
+    if game_state is None:
+      return
 
     if phase == Phase.USE :
-      logging.info("Turn: " + game_state.turn)
+      logging.info("Turn: " + str(game_state.turn))
       use_action = UseAction(player_index, strategy.use_action_decision(game_state, player_index))
       logging.debug(jsonpickle.encode(use_action))
       client.write(jsonpickle.encode(use_action, unpicklable=False))
@@ -126,7 +134,7 @@ def main():
       phase = Phase.USE
       
   client.disconnect()
-  logging.info("Game ended. Check your output at Engine\\gamelogs.")
+  logging.info("Completed!. Check your output at Engine\\gamelogs.")
 
 """ parse json string into a GameState Object."""
 def parse_json_as_game_state(data: str) -> GameState:

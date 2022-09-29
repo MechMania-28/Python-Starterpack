@@ -1,18 +1,18 @@
 from random import Random
 from game.game_state import GameState
-import player.character_class
+import game.character_class
 
-from player.item import Item
+from game.item import Item
 
-from player.position import Position
+from game.position import Position
 from strategy.strategy import Strategy
 
 class StarterStrategy(Strategy):
     def strategy_initialize(self):
-        return player.character_class.CharacterClass.WIZARD
+        return game.character_class.CharacterClass.WIZARD
 
     def move_action_decision(self, game_state: GameState, my_player_index: int) -> Position:
-        return Position()
+        return 1
 
     def attack_action_decision(self, game_state: GameState, my_player_index: int) -> int:
         return Random().randint(0, 3)

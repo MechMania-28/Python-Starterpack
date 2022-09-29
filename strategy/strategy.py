@@ -1,8 +1,8 @@
 from abc import abstractmethod
 from game.game_state import GameState
-from player.item import Item
+from game.item import Item
 
-from player.position import Position
+from game.position import Position
 
 
 class Strategy(object):

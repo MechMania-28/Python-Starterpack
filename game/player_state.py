@@ -1,8 +1,7 @@
-from turtle import position
-from player.character_class import CharacterClass
-from player.item import Item
-from player.position import Position
-from player.stat_set import StatSet
+from game.character_class import CharacterClass
+from game.item import Item
+from game.position import Position
+from game.stat_set import StatSet
 
 
 class PlayerState:

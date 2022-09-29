@@ -1,5 +1,5 @@
 from enum import Enum
-from player.stat_set import StatSet
+from game.stat_set import StatSet
 
 class ItemModel():
     def __init__(self, stat_set, item_timer, cost) -> None:
