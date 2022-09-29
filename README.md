@@ -25,3 +25,6 @@ to run 4 copies of your bot alongside [Engine](https://github.com/MechMania-28/E
 Again, make sure you are familiar with the mechanisms of the game and the Strategy class. If you have any questions, do not hesitate to contact us through Discord or in person with any questions!
 
 Good luck!
+
+### Note
+You can enable debug output with option `-d`, which will make the bot print out every message it sends to the engine.
