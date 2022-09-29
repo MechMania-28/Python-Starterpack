@@ -4,7 +4,7 @@ import random
 
 import config
 
-from player.position import Position
+from game.position import Position
 
 def manhattan_distance(p1: Position, p2: Position) -> int:
     return math.abs(p1.getX() - p2.getX()) + math.abs(p1.getY() - p2.getY())
