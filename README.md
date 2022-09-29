@@ -1,7 +1,7 @@
 # Python-Starterpack
 Thank you for coming out to MechMania 28!
 
-This repository contains source code of the Java Starterpack for MechMania 28. You may view or edit any file in this repository.
+This repository contains source code of the Python Starterpack for MechMania 28. You may view or edit any file in this repository.
 
 Make sure you have read [Wiki](https://github.com/MechMania-28/Wiki) for information on the game mechanisms.
 
