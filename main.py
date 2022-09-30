@@ -87,7 +87,7 @@ def main():
       continue
 
     if comm_state == CommState.CLASS_REPORT:
-      character_class = strategy.strategy_initialize()
+      character_class = strategy.strategy_initialize(player_index)
       client.write(jsonpickle.encode(character_class.name))
       comm_state = CommState.END
 

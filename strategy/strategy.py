@@ -10,7 +10,7 @@ class Strategy(object):
     :returns: A game.CharacterClass Enum.
     """
     @abstractmethod
-    def strategy_initialize(self) -> None:
+    def strategy_initialize(self, my_player_index: int) -> None:
         pass
 
     """Each turn, decide if you should use the item you're holding. Do not try to use the
@@ -22,7 +22,7 @@ class Strategy(object):
     :returns: If you want to use your item
     """
     @abstractmethod
-    def use_action_decision(self, game_state: GameState, my_player_index) -> bool:
+    def use_action_decision(self, game_state: GameState, my_player_index: int) -> bool:
         pass
 
     """Each turn, pick a position on the board that you want to move towards. Be careful not to
@@ -34,7 +34,7 @@ class Strategy(object):
     :returns: A game.Position object.
     """
     @abstractmethod
-    def move_action_decision(self, game_state: GameState, my_player_index) -> Position:
+    def move_action_decision(self, game_state: GameState, my_player_index: int) -> Position:
         pass
 
     """Each turn, pick a player you would like to attack. Feel free to be a pacifist and attack no
@@ -46,7 +46,7 @@ class Strategy(object):
     :returns: Your target's player index.
     """
     @abstractmethod
-    def attack_action_decision(self, game_state: GameState, my_player_index) -> int:
+    def attack_action_decision(self, game_state: GameState, my_player_index: int) -> int:
         pass
 
     """Each turn, pick an item you want to buy. Return Item.None if you don't think you can
@@ -58,6 +58,6 @@ class Strategy(object):
     :returns: A game.Item object.
     """
     @abstractmethod
-    def buy_action_decision(self, game_state: GameState, my_player_index) -> Item:
+    def buy_action_decision(self, game_state: GameState, my_player_index: int) -> Item:
         pass
 
