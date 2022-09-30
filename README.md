@@ -18,9 +18,9 @@ We have provided some useful stuff in the `util` package. `utility` includes som
 
 Finally, compile your bot by using `py build.py` and you will find the executable `bot.pyz` under the project root file. Use commands
 
-`py path/to/pyz <player_number>` or the helper scripts `./start-4-python-bots.bat` and `./start-4-python-bots.sh`
+`py path/to/pyz <player_number>` or the `./start-4-python-bots.bat` (this is a development byproduct so sorry mac users) to run 4 copies of your bot
 
-to run 4 copies of your bot alongside [Engine](https://github.com/MechMania-28/Engine) to test them out, and use `mm push` (TODO) to submit to the tournament!
+alongside [Engine](https://github.com/MechMania-28/Engine) to test them out, and use `mm push` (TODO) to submit to the tournament!
 
 Again, make sure you are familiar with the mechanisms of the game and the Strategy class. If you have any questions, do not hesitate to contact us through Discord or in person with any questions!
 
