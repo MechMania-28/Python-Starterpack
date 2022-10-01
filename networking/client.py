@@ -1,5 +1,6 @@
 import logging
 import socket
+import time
 
 
 class Client:
@@ -17,6 +18,8 @@ class Client:
         self.connected = True
       except ConnectionRefusedError:
         logging.info("Connect to engine failed...")
+        time.sleep(1)
+
 
   def read(self) -> str:
     message = self.socket.recv(2048)
