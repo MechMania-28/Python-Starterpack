@@ -10,7 +10,7 @@ Your job is to create a strategy for your bot on where, how and who it should fi
 
 To get started, create a class under the strategy package and implement the functions provided by the `strategy` interface. We will also provide an example strategy named `starter_strategy` that will do nothing but being an example.
 
-For each phase in the game, you will be given a `GameState` and your `playerIndex` as input, and you need to submit a decision by returning a value to the corresponding `.._action_decision` methods. After you have done writing down your logic, register your strategy by editing the return values in `StrategyConfig.java`. You could create different strategy implementations and register them for different players.
+For each phase in the game, you will be given a `GameState` and your `playerIndex` as input, and you need to submit a decision by returning a value to the corresponding `.._action_decision` methods. After you have done writing down your logic, register your strategy by editing the return values in `strategy_config.py`. You could create different strategy implementations and register them for different players.
 
 You'll primarily need to look at the classes within the `game` package to know what are the objects that assembles into in a `GameState` that you will receive from the engine. 
 
